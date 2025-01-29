@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, PanInfo } from "framer-motion"
 import Image from "next/image"
 
 interface LockScreenProps {
@@ -24,7 +24,7 @@ export default function LockScreen({ onUnlock }: LockScreenProps) {
     setAudio(audioObj)
   }, [])
 
-  const handleDragEnd = (event: any, info: any) => {
+  const handleDragEnd = (event: MouseEvent | TouchEvent, info: PanInfo) => {
     if (info.offset.y < -50) {
       onUnlock()
       if (audio) {

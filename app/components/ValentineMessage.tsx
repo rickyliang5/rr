@@ -1,30 +1,51 @@
-"use client"
+'use client'
 
-import { motion } from "framer-motion"
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import TypingMessage from './TypingMessage'
+import { Heart } from 'lucide-react'
 
 export default function ValentineMessage() {
+  const [showHearts, setShowHearts] = useState(false)
+
+  const message = `Happy five years babe! Thank you for being the best and cutest girlfriend in the world. I hope we last forever and have some kids and a happy family. Happy boy, I love you so much! ❤️`
+
   return (
-    <motion.div
-      className="w-full h-full flex flex-col items-center justify-center text-center"
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.h1
-        className="text-4xl font-bold text-red-500 mb-4"
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
-      >
-        Will you be my Valentine?
-      </motion.h1>
+    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 to-rose-200 p-6 overflow-y-auto">
       <motion.div
-        className="text-6xl"
-        animate={{ rotate: [0, 10, -10, 0] }}
-        transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5 }}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full"
       >
-        ❤️
+        <TypingMessage message={message} onComplete={() => setShowHearts(true)} />
       </motion.div>
-    </motion.div>
+      {showHearts && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="absolute inset-0 pointer-events-none"
+        >
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ y: "100%", x: `${Math.random() * 100}%`, opacity: 0 }}
+              animate={{
+                y: "-100%",
+                opacity: [0, 1, 0],
+                transition: {
+                  repeat: Number.POSITIVE_INFINITY,
+                  duration: 4 + Math.random() * 2,
+                  delay: Math.random() * 2,
+                },
+              }}
+            >
+              <Heart className="text-rose-500 w-6 h-6" />
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
+    </div>
   )
 }
-

@@ -1,3 +1,4 @@
+
 import type { ReactNode } from "react"
 
 export default function IPhoneFrame({ children }: { children: ReactNode }) {
@@ -8,4 +9,3 @@ export default function IPhoneFrame({ children }: { children: ReactNode }) {
     </div>
   )
 }
-
