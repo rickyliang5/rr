@@ -20,13 +20,19 @@ export default function TypingMessage({ message, onComplete }: TypingMessageProp
           return message.slice(0, index)
         }
         clearInterval(timer)
-        onComplete()
         return prev
       })
     }, 50) // Adjust typing speed here
 
     return () => clearInterval(timer)
-  }, [message, onComplete])
+  }, [message])
+
+  // Trigger onComplete when the full message is displayed
+  useEffect(() => {
+    if (displayedMessage === message) {
+      onComplete()
+    }
+  }, [displayedMessage, message, onComplete])
 
   return (
     <motion.div
